@@ -7,6 +7,7 @@ package gosql
 
 import (
 	"database/sql"
+	"database/sql/driver"
 	"encoding/json"
 	"strings"
 
@@ -16,7 +17,7 @@ import (
 // Hstore implementation
 type Hstore hstore.Hstore
 
-// Map values for hstore
+// Data values for hstore
 func (h Hstore) Data() map[string]sql.NullString {
 	return h.Map
 }
@@ -47,7 +48,7 @@ func (h *Hstore) Unset(key string) {
 // MarshalJSON method
 func (h Hstore) MarshalJSON() ([]byte, error) {
 	parts := make([]string, 0, len(h.Map))
-	for key, val := range h.Hstore.Map {
+	for key, val := range h.Map {
 		parts = append(parts, key+"=>"+val.String)
 	}
 	return json.Marshal(strings.Join(parts, ","))
@@ -61,4 +62,18 @@ func (h Hstore) String() string {
 		}
 	}
 	return ""
+}
+
+// Scan implements the Scanner interface.
+//
+// Note h.Map is reallocated before the scan to clear existing values. If the
+// hstore column's database value is NULL, then h.Map is set to nil instead.
+func (h *Hstore) Scan(value interface{}) error {
+	return (*hstore.Hstore)(h).Scan(value)
+}
+
+// Value implements the driver Valuer interface. Note if h.Map is nil, the
+// database column value will be set to NULL.
+func (h Hstore) Value() (driver.Value, error) {
+	return (hstore.Hstore)(h).Value()
 }
