@@ -3,8 +3,7 @@
 // @author Dmitry Ponomarev <demdxx@gmail.com> 2016
 //
 
-
-package sql
+package gosql
 
 import (
 	"database/sql"
