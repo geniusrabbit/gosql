@@ -88,6 +88,18 @@ func (f *NullableStringArray) DecodeValue(v interface{}) error {
 	return nil
 }
 
+// IndexOf array value
+func (f NullableStringArray) IndexOf(v string) int {
+	if f != nil {
+		for i, vl := range f {
+			if vl == v {
+				return i
+			}
+		}
+	}
+	return -1
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 // StringArray implementation
@@ -137,6 +149,11 @@ func (f *StringArray) DecodeValue(v interface{}) error {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableStringArray)(f).DecodeValue(v)
+}
+
+// IndexOf array value
+func (f StringArray) IndexOf(v string) int {
+	return (NullableStringArray)(f).IndexOf(v)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
