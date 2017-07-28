@@ -20,12 +20,12 @@ func (f NullableIntArray) Value() (driver.Value, error) {
 	if nil == f {
 		return nil, nil
 	}
-	return encodeIntArray('{', '}', f).String(), nil
+	return IntArrayEncode('{', '}', f).String(), nil
 }
 
 // Scan implements the driver.Valuer interface, []int field
 func (f *NullableIntArray) Scan(value interface{}) error {
-	if res, err := decodeIntArray(value); nil == err {
+	if res, err := IntArrayDecode(value); nil == err {
 		*f = NullableIntArray(res)
 	} else {
 		return err
@@ -38,12 +38,12 @@ func (f NullableIntArray) MarshalJSON() ([]byte, error) {
 	if nil == f {
 		return []byte("null"), nil
 	}
-	return encodeIntArray('[', ']', f).Bytes(), nil
+	return IntArrayEncode('[', ']', f).Bytes(), nil
 }
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *NullableIntArray) UnmarshalJSON(b []byte) error {
-	res, err := decodeIntArray(b)
+	res, err := IntArrayDecode(b)
 	*f = NullableIntArray(res)
 	return err
 }
@@ -58,7 +58,7 @@ func (f *NullableIntArray) DecodeValue(v interface{}) error {
 	case IntArray:
 		*f = NullableIntArray(val)
 	case []byte, string:
-		list, err := decodeIntArray(v)
+		list, err := IntArrayDecode(v)
 		if nil == err {
 			*f = NullableIntArray(list)
 		}

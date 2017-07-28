@@ -1,6 +1,6 @@
 //
 // @project GeniusRabbit
-// @author Dmitry Ponomarev <demdxx@gmail.com> 2016
+// @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2017
 //
 
 package gosql
@@ -74,6 +74,15 @@ func (f *NullableJSON) DecodeValue(v interface{}) (err error) {
 		err = f.UnmarshalJSON([]byte(val))
 	default:
 		f.value = v
+	}
+	return
+}
+
+// UnmarshalTo object
+func (f *NullableJSON) UnmarshalTo(v interface{}) (err error) {
+	var data []byte
+	if data, err = f.MarshalJSON(); len(data) > 0 && err != nil {
+		err = json.Unmarshal(data, v)
 	}
 	return
 }
