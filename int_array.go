@@ -91,6 +91,19 @@ func (f NullableIntArray) IndexOf(v int) int {
 	return -1
 }
 
+// OneOf value in array
+func (f NullableIntArray) OneOf(vals []int) bool {
+	if len(f) < 1 || len(vals) < 1 {
+		return false
+	}
+	for _, v := range vals {
+		if f.IndexOf(v) != -1 {
+			return true
+		}
+	}
+	return false
+}
+
 // Ordered object
 func (f NullableIntArray) Ordered() NullableOrderedIntArray {
 	f.Sort()
@@ -152,6 +165,19 @@ func (f NullableOrderedIntArray) IndexOf(v int) int {
 	return -1
 }
 
+// OneOf value in array
+func (f NullableOrderedIntArray) OneOf(vals []int) bool {
+	if len(f) < 1 || len(vals) < 1 {
+		return false
+	}
+	for _, v := range vals {
+		if f.IndexOf(v) != -1 {
+			return true
+		}
+	}
+	return false
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 // IntArray type of field
@@ -202,6 +228,19 @@ func (f IntArray) Len() int {
 // IndexOf array value
 func (f IntArray) IndexOf(v int) int {
 	return NullableIntArray(f).IndexOf(v)
+}
+
+// OneOf value in array
+func (f IntArray) OneOf(vals []int) bool {
+	if len(f) < 1 || len(vals) < 1 {
+		return false
+	}
+	for _, v := range vals {
+		if f.IndexOf(v) != -1 {
+			return true
+		}
+	}
+	return false
 }
 
 // Ordered object
@@ -257,4 +296,17 @@ func (f OrderedIntArray) Len() int {
 // IndexOf array value
 func (f OrderedIntArray) IndexOf(v int) int {
 	return (NullableOrderedIntArray)(f).IndexOf(v)
+}
+
+// OneOf value in array
+func (f OrderedIntArray) OneOf(vals []int) bool {
+	if len(f) < 1 || len(vals) < 1 {
+		return false
+	}
+	for _, v := range vals {
+		if f.IndexOf(v) != -1 {
+			return true
+		}
+	}
+	return false
 }

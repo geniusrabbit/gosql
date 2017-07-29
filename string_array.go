@@ -180,7 +180,7 @@ func (f StringArray) IndexOf(v string) int {
 }
 
 // OneOf value in array
-func (f NullableStringArray) OneOf(vals []string) bool {
+func (f StringArray) OneOf(vals []string) bool {
 	return (NullableStringArray)(f).OneOf(vals)
 }
 
