@@ -74,6 +74,11 @@ func (f NullableIntArray) Sort() {
 	sort.Ints(f)
 }
 
+// Len of array
+func (f NullableIntArray) Len() int {
+	return len(f)
+}
+
 // IndexOf array value
 func (f NullableIntArray) IndexOf(v int) int {
 	if nil != f {
@@ -131,6 +136,11 @@ func (f NullableOrderedIntArray) Sort() {
 	(NullableIntArray)(f).Sort()
 }
 
+// Len of array
+func (f NullableOrderedIntArray) Len() int {
+	return len(f)
+}
+
 // IndexOf array value
 func (f NullableOrderedIntArray) IndexOf(v int) int {
 	if nil != f {
@@ -184,6 +194,11 @@ func (f IntArray) Sort() {
 	(NullableIntArray)(f).Sort()
 }
 
+// Len of array
+func (f IntArray) Len() int {
+	return len(f)
+}
+
 // IndexOf array value
 func (f IntArray) IndexOf(v int) int {
 	return NullableIntArray(f).IndexOf(v)
@@ -232,6 +247,11 @@ func (f *OrderedIntArray) DecodeValue(v interface{}) error {
 // Sort ints array
 func (f OrderedIntArray) Sort() {
 	(NullableOrderedIntArray)(f).Sort()
+}
+
+// Len of array
+func (f OrderedIntArray) Len() int {
+	return len(f)
 }
 
 // IndexOf array value

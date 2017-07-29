@@ -76,6 +76,11 @@ func (f NullableUintArray) Sort() {
 	sortutil.UintSlice(f).Sort()
 }
 
+// Len of array
+func (f NullableUintArray) Len() int {
+	return len(f)
+}
+
 // IndexOf array value
 func (f NullableUintArray) IndexOf(v uint) int {
 	if nil != f {
@@ -133,6 +138,11 @@ func (f NullableOrderedUintArray) Sort() {
 	(NullableUintArray)(f).Sort()
 }
 
+// Len of array
+func (f NullableOrderedUintArray) Len() int {
+	return len(f)
+}
+
 // IndexOf array value
 func (f NullableOrderedUintArray) IndexOf(v uint) int {
 	if nil != f {
@@ -186,6 +196,11 @@ func (f UintArray) Sort() {
 	(NullableUintArray)(f).Sort()
 }
 
+// Len of array
+func (f UintArray) Len() int {
+	return len(f)
+}
+
 // IndexOf array value
 func (f UintArray) IndexOf(v uint) int {
 	return NullableUintArray(f).IndexOf(v)
@@ -234,6 +249,11 @@ func (f *OrderedUintArray) DecodeValue(v interface{}) error {
 // Sort ints array
 func (f OrderedUintArray) Sort() {
 	(NullableOrderedUintArray)(f).Sort()
+}
+
+// Len of array
+func (f OrderedUintArray) Len() int {
+	return len(f)
 }
 
 // IndexOf array value

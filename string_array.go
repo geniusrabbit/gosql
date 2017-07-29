@@ -88,6 +88,11 @@ func (f *NullableStringArray) DecodeValue(v interface{}) error {
 	return nil
 }
 
+// Len of array
+func (f NullableStringArray) Len() int {
+	return len(f)
+}
+
 // IndexOf array value
 func (f NullableStringArray) IndexOf(v string) int {
 	if f != nil {
@@ -98,6 +103,19 @@ func (f NullableStringArray) IndexOf(v string) int {
 		}
 	}
 	return -1
+}
+
+// OneOf value in array
+func (f NullableStringArray) OneOf(vals []string) bool {
+	if len(f) < 1 || len(vals) < 1 {
+		return false
+	}
+	for _, v := range vals {
+		if f.IndexOf(v) != -1 {
+			return true
+		}
+	}
+	return false
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -151,9 +169,19 @@ func (f *StringArray) DecodeValue(v interface{}) error {
 	return (*NullableStringArray)(f).DecodeValue(v)
 }
 
+// Len of array
+func (f StringArray) Len() int {
+	return len(f)
+}
+
 // IndexOf array value
 func (f StringArray) IndexOf(v string) int {
 	return (NullableStringArray)(f).IndexOf(v)
+}
+
+// OneOf value in array
+func (f NullableStringArray) OneOf(vals []string) bool {
+	return (NullableStringArray)(f).OneOf(vals)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
