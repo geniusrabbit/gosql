@@ -112,6 +112,16 @@ func (f NullableUintArray) Ordered() NullableOrderedUintArray {
 	return NullableOrderedUintArray(f)
 }
 
+// Filter current array and create filtered copy
+func (f NullableUintArray) Filter(fn func(v uint) (uint, bool)) (resp NullableUintArray) {
+	for _, v := range f {
+		if nv, ok := fn(v); ok {
+			resp = append(resp, nv)
+		}
+	}
+	return
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 // NullableOrderedUintArray type of field
@@ -178,6 +188,16 @@ func (f NullableOrderedUintArray) OneOf(vals []uint) bool {
 		}
 	}
 	return false
+}
+
+// Filter current array and create filtered copy
+func (f NullableOrderedUintArray) Filter(fn func(v uint) (uint, bool)) (resp NullableOrderedUintArray) {
+	for _, v := range f {
+		if nv, ok := fn(v); ok {
+			resp = append(resp, nv)
+		}
+	}
+	return
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -251,6 +271,16 @@ func (f UintArray) Ordered() OrderedUintArray {
 	return OrderedUintArray(f)
 }
 
+// Filter current array and create filtered copy
+func (f UintArray) Filter(fn func(v uint) (uint, bool)) (resp UintArray) {
+	for _, v := range f {
+		if nv, ok := fn(v); ok {
+			resp = append(resp, nv)
+		}
+	}
+	return
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 // OrderedUintArray type of field
@@ -311,4 +341,14 @@ func (f OrderedUintArray) OneOf(vals []uint) bool {
 		}
 	}
 	return false
+}
+
+// Filter current array and create filtered copy
+func (f OrderedUintArray) Filter(fn func(v uint) (uint, bool)) (resp OrderedUintArray) {
+	for _, v := range f {
+		if nv, ok := fn(v); ok {
+			resp = append(resp, nv)
+		}
+	}
+	return
 }
