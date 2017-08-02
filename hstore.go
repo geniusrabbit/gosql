@@ -1,6 +1,6 @@
 //
 // @project GeniusRabbit
-// @author Dmitry Ponomarev <demdxx@gmail.com> 2016
+// @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2017
 //
 
 package gosql
@@ -9,6 +9,7 @@ import (
 	"database/sql"
 	"database/sql/driver"
 	"encoding/json"
+	"strconv"
 	"strings"
 
 	"github.com/lib/pq/hstore"
@@ -20,6 +21,15 @@ type Hstore hstore.Hstore
 // Data values for hstore
 func (h Hstore) Data() map[string]sql.NullString {
 	return h.Map
+}
+
+// GetBool value from store
+func (h Hstore) GetBool(key string) bool {
+	if v, ok := h.Get(key); ok {
+		ok, _ = strconv.ParseBool(v)
+		return ok
+	}
+	return false
 }
 
 // Get value by key
@@ -35,7 +45,7 @@ func (h *Hstore) Set(key, value string) {
 	if nil == h.Map {
 		h.Map = make(map[string]sql.NullString)
 	}
-	h.Map[key] = sql.NullString{value, true}
+	h.Map[key] = sql.NullString{String: value, Valid: true}
 }
 
 // Unset value by key
