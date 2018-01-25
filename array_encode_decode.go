@@ -561,8 +561,6 @@ func Uint8ArrayDecode(data interface{}) (result []uint8, err error) {
 		t   uint8
 	)
 	switch data.(type) {
-	case []byte:
-		arr = string(data.([]byte))
 	case string:
 		arr = data.(string)
 	case []uint8:
