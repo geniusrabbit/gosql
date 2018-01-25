@@ -34,8 +34,8 @@ func GenTypeArrayDecode(data interface{}) (result []GenType, err error) {
 	}
 
 	result = make([]GenType, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 

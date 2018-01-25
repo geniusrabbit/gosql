@@ -38,8 +38,8 @@ func IntArrayDecode(data interface{}) (result []int, err error) {
 	}
 
 	result = make([]int, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 
@@ -128,8 +128,8 @@ func Int8ArrayDecode(data interface{}) (result []int8, err error) {
 	}
 
 	result = make([]int8, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 
@@ -218,8 +218,8 @@ func Int16ArrayDecode(data interface{}) (result []int16, err error) {
 	}
 
 	result = make([]int16, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 
@@ -308,8 +308,8 @@ func Int32ArrayDecode(data interface{}) (result []int32, err error) {
 	}
 
 	result = make([]int32, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 
@@ -398,8 +398,8 @@ func Int64ArrayDecode(data interface{}) (result []int64, err error) {
 	}
 
 	result = make([]int64, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 
@@ -488,8 +488,8 @@ func UintArrayDecode(data interface{}) (result []uint, err error) {
 	}
 
 	result = make([]uint, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 
@@ -565,6 +565,8 @@ func Uint8ArrayDecode(data interface{}) (result []uint8, err error) {
 		arr = string(data.([]byte))
 	case string:
 		arr = data.(string)
+	case []uint8:
+		return data.([]uint8), nil
 	case nil:
 		return nil, nil
 	default:
@@ -576,8 +578,8 @@ func Uint8ArrayDecode(data interface{}) (result []uint8, err error) {
 	}
 
 	result = make([]uint8, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 
@@ -666,8 +668,8 @@ func Uint16ArrayDecode(data interface{}) (result []uint16, err error) {
 	}
 
 	result = make([]uint16, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 
@@ -756,8 +758,8 @@ func Uint32ArrayDecode(data interface{}) (result []uint32, err error) {
 	}
 
 	result = make([]uint32, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 
@@ -846,8 +848,8 @@ func Uint64ArrayDecode(data interface{}) (result []uint64, err error) {
 	}
 
 	result = make([]uint64, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 
@@ -936,8 +938,8 @@ func Float32ArrayDecode(data interface{}) (result []float32, err error) {
 	}
 
 	result = make([]float32, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 
@@ -1026,8 +1028,8 @@ func Float64ArrayDecode(data interface{}) (result []float64, err error) {
 	}
 
 	result = make([]float64, 0)
-	if "{}" != arr && len(arr) > 0 {
-		if vals := strings.Split(strings.Trim(arr, "{}"), ","); vals != nil {
+	if arr != "{}" && arr != "[]" && len(arr) > 0 {
+		if vals := strings.Split(strings.Trim(arr, "{}[]"), ","); vals != nil {
 			for _, cid := range vals {
 				var br = false
 
