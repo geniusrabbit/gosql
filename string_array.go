@@ -17,7 +17,7 @@ type NullableStringArray []string
 
 // Join array to string
 func (f NullableStringArray) Join(sep string) string {
-	if nil == f {
+	if f == nil {
 		return ""
 	}
 	return strings.Join(f, sep)
@@ -31,7 +31,7 @@ func (f *NullableStringArray) SetArray(arr []string) *NullableStringArray {
 
 // Value implements the driver.Valuer interface, []string field
 func (f NullableStringArray) Value() (driver.Value, error) {
-	if nil == f {
+	if f == nil {
 		return nil, nil
 	}
 	return encodeNullableStringArray('{', '}', byte(0), f).String(), nil
@@ -55,7 +55,7 @@ func (f *NullableStringArray) Scan(value interface{}) error {
 
 // MarshalJSON implements the json.Marshaler
 func (f NullableStringArray) MarshalJSON() ([]byte, error) {
-	if nil == f {
+	if f == nil {
 		return []byte("null"), nil
 	}
 	return json.Marshal([]string(f))
@@ -63,9 +63,11 @@ func (f NullableStringArray) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *NullableStringArray) UnmarshalJSON(b []byte) error {
-	if *f = decodeNullableStringArray(string(b)); nil == *f {
-		*f = []string{}
+	var list []string
+	if err := json.Unmarshal(b, &list); err != nil {
+		return err
 	}
+	*f = list
 	return nil
 }
 
@@ -130,7 +132,7 @@ func (f StringArray) Join(sep string) string {
 
 // SetArray value
 func (f *StringArray) SetArray(arr []string) *StringArray {
-	if nil == arr {
+	if arr == nil {
 		arr = []string{}
 	}
 	*f = arr
@@ -139,7 +141,7 @@ func (f *StringArray) SetArray(arr []string) *StringArray {
 
 // Value implements the driver.Valuer interface, []string field
 func (f StringArray) Value() (driver.Value, error) {
-	if nil == f {
+	if f == nil {
 		return "{}", ErrNullValueNotAllowed
 	}
 	return NullableStringArray(f).Value()
@@ -147,7 +149,7 @@ func (f StringArray) Value() (driver.Value, error) {
 
 // Scan implements the driver.Valuer interface, []string field
 func (f *StringArray) Scan(value interface{}) error {
-	if nil == value {
+	if value == nil {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableStringArray)(f).Scan(value)
@@ -155,7 +157,7 @@ func (f *StringArray) Scan(value interface{}) error {
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *StringArray) UnmarshalJSON(b []byte) error {
-	if nil == b {
+	if b == nil {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableStringArray)(f).UnmarshalJSON(b)
@@ -163,7 +165,7 @@ func (f *StringArray) UnmarshalJSON(b []byte) error {
 
 // DecodeValue implements the gocast.Decoder
 func (f *StringArray) DecodeValue(v interface{}) error {
-	if nil == v {
+	if v == nil {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableStringArray)(f).DecodeValue(v)
@@ -202,7 +204,7 @@ func encodeNullableStringArray(begin, end, border byte, arr []string) *bytes.Buf
 	var buff bytes.Buffer
 	buff.WriteByte(begin)
 
-	if nil != arr {
+	if arr != nil {
 		for i, v := range arr {
 			if i > 0 {
 				buff.WriteByte(',')
