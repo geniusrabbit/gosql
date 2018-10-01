@@ -1,6 +1,6 @@
 //
 // @project GeniusRabbit
-// @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2017
+// @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2018
 //
 
 package gosql
@@ -12,17 +12,40 @@ import (
 
 // NullableJSON field
 type NullableJSON struct {
-	value interface{}
+	value []byte
 }
 
-// GetValue of json
-func (f NullableJSON) GetValue() interface{} {
-	return f.value
+// NewNullableJSON field object
+func NewNullableJSON(v ...interface{}) (jobj *NullableJSON, err error) {
+	jobj = &NullableJSON{}
+	if len(v) > 0 && v[0] != nil {
+		err = jobj.SetValue(v[0])
+	}
+	return
+}
+
+// String value
+func (f *NullableJSON) String() string {
+	if f == nil || f.value == nil {
+		return "null"
+	}
+	return string(f.value)
 }
 
 // SetValue of json
-func (f *NullableJSON) SetValue(value interface{}) {
-	f.value = value
+func (f *NullableJSON) SetValue(value interface{}) (err error) {
+	f.value, err = json.Marshal(value)
+	return
+}
+
+// Bytes body
+func (f NullableJSON) Bytes() []byte {
+	return f.value
+}
+
+// Length of the body
+func (f NullableJSON) Length() int {
+	return len(f.value)
 }
 
 // Value implements the driver.Valuer interface, json field interface
@@ -36,33 +59,43 @@ func (f NullableJSON) Value() (_ driver.Value, err error) {
 
 // Scan implements the driver.Valuer interface, json field interface
 func (f *NullableJSON) Scan(value interface{}) error {
-	switch value.(type) {
+	switch v := value.(type) {
 	case string:
-		value = []byte(value.(string))
-		break
+		value = []byte(v)
 	case []byte:
-		break
 	case nil:
 		f.value = nil
 		return nil
-		break
 	default:
 		return ErrInvalidScan
 	}
-	return json.Unmarshal(value.([]byte), &f.value)
+
+	var (
+		trg interface{}
+		err = json.Unmarshal(value.([]byte), &trg)
+	)
+
+	if err == nil {
+		f.value = append([]byte{}, value.([]byte)...)
+	}
+	return err
 }
 
 // MarshalJSON implements the json.Marshaler
 func (f NullableJSON) MarshalJSON() ([]byte, error) {
-	if nil == f.value {
+	if f.value == nil {
 		return []byte("null"), nil
 	}
-	return json.Marshal(f.value)
+	return f.value, nil
 }
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *NullableJSON) UnmarshalJSON(b []byte) error {
-	return json.Unmarshal(b, &f.value)
+	if len(f.value) > 0 {
+		f.value = f.value[:0]
+	}
+	f.value = append(f.value, b...)
+	return nil
 }
 
 // DecodeValue implements the gocast.Decoder
@@ -73,18 +106,17 @@ func (f *NullableJSON) DecodeValue(v interface{}) (err error) {
 	case string:
 		err = f.UnmarshalJSON([]byte(val))
 	default:
-		f.value = v
+		err = f.SetValue(v)
 	}
 	return
 }
 
 // UnmarshalTo object
 func (f *NullableJSON) UnmarshalTo(v interface{}) (err error) {
-	var data []byte
-	if data, err = f.MarshalJSON(); len(data) > 0 && err != nil {
-		err = json.Unmarshal(data, v)
+	if len(f.value) < 1 {
+		return
 	}
-	return
+	return json.Unmarshal(f.value, v)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -92,9 +124,15 @@ func (f *NullableJSON) UnmarshalTo(v interface{}) (err error) {
 // JSON field
 type JSON NullableJSON
 
+// NewJSON field object
+func NewJSON(v ...interface{}) (*JSON, error) {
+	jobj, err := NewNullableJSON(v...)
+	return (*JSON)(jobj), err
+}
+
 // Value implements the driver.Valuer interface, json field interface
 func (f JSON) Value() (driver.Value, error) {
-	if nil == f.value {
+	if f.value == nil {
 		return nil, ErrNullValueNotAllowed
 	}
 	return NullableJSON(f).MarshalJSON()
@@ -102,7 +140,7 @@ func (f JSON) Value() (driver.Value, error) {
 
 // Scan implements the driver.Valuer interface, json field interface
 func (f *JSON) Scan(value interface{}) error {
-	if nil == f {
+	if f == nil {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableJSON)(f).Scan(value)
@@ -110,7 +148,7 @@ func (f *JSON) Scan(value interface{}) error {
 
 // MarshalJSON Implement json.Marshaler
 func (f JSON) MarshalJSON() ([]byte, error) {
-	if nil == f.value {
+	if f.value == nil {
 		return []byte("{}"), nil
 	}
 	return NullableJSON(f).MarshalJSON()
@@ -118,7 +156,7 @@ func (f JSON) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON Implement json.Unmarshaller
 func (f *JSON) UnmarshalJSON(b []byte) error {
-	if nil == b {
+	if b == nil {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableJSON)(f).UnmarshalJSON(b)
@@ -126,7 +164,7 @@ func (f *JSON) UnmarshalJSON(b []byte) error {
 
 // DecodeValue implements the gocast.Decoder
 func (f *JSON) DecodeValue(v interface{}) (err error) {
-	if nil == v {
+	if v == nil {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableJSON)(f).DecodeValue(v)
