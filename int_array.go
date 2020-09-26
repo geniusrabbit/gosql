@@ -6,7 +6,6 @@
 package gosql
 
 import (
-	"database/sql"
 	"database/sql/driver"
 	"sort"
 )
@@ -19,7 +18,7 @@ type NullableIntArray []int
 // Value implements the driver.Valuer interface, []int field
 func (f NullableIntArray) Value() (driver.Value, error) {
 	if f == nil {
-		return sql.NullInt32{}, nil
+		return []byte(nil), nil
 	}
 	return IntArrayEncode('{', '}', f).String(), nil
 }

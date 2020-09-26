@@ -7,7 +7,6 @@ package gosql
 
 import (
 	"bytes"
-	"database/sql"
 	"database/sql/driver"
 	"encoding/json"
 	"strings"
@@ -33,7 +32,7 @@ func (f *NullableStringArray) SetArray(arr []string) *NullableStringArray {
 // Value implements the driver.Valuer interface, []string field
 func (f NullableStringArray) Value() (driver.Value, error) {
 	if f == nil {
-		return sql.NullString{}, nil
+		return []byte(nil), nil
 	}
 	return encodeNullableStringArray('{', '}', byte(0), f).String(), nil
 }
@@ -98,11 +97,12 @@ func (f NullableStringArray) Len() int {
 
 // IndexOf array value
 func (f NullableStringArray) IndexOf(v string) int {
-	if f != nil {
-		for i, vl := range f {
-			if vl == v {
-				return i
-			}
+	if f == nil {
+		return -1
+	}
+	for i, vl := range f {
+		if vl == v {
+			return i
 		}
 	}
 	return -1
@@ -192,10 +192,10 @@ func (f StringArray) OneOf(vals []string) bool {
 ///////////////////////////////////////////////////////////////////////////////
 
 func decodeNullableStringArray(arr string) []string {
-	if "null" == arr || "NULL" == arr {
+	if strings.EqualFold(arr, "null") {
 		return nil
 	}
-	if "{}" == arr {
+	if arr == "{}" {
 		return []string{}
 	}
 	return strings.Split(strings.Trim(arr, "{}"), ",")
@@ -205,18 +205,16 @@ func encodeNullableStringArray(begin, end, border byte, arr []string) *bytes.Buf
 	var buff bytes.Buffer
 	buff.WriteByte(begin)
 
-	if arr != nil {
-		for i, v := range arr {
-			if i > 0 {
-				buff.WriteByte(',')
-			}
-			if byte(0) != border {
-				buff.WriteByte(border)
-			}
-			buff.WriteString(v)
-			if byte(0) != border {
-				buff.WriteByte(border)
-			}
+	for i, v := range arr {
+		if i > 0 {
+			buff.WriteByte(',')
+		}
+		if byte(0) != border {
+			buff.WriteByte(border)
+		}
+		buff.WriteString(v)
+		if byte(0) != border {
+			buff.WriteByte(border)
 		}
 	}
 
