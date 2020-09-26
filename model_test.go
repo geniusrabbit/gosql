@@ -1,6 +1,6 @@
 //
 // @project GeniusRabbit
-// @author Dmitry Ponomarev <demdxx@gmail.com> 2016
+// @author Dmitry Ponomarev <demdxx@gmail.com> 2016, 2020
 //
 
 package gosql
@@ -39,7 +39,7 @@ func selectIt(db *sql.DB) (m *Model, err error) {
 		/**/ "uint_array, nullable_uint_array, ordered_uint_array, nullable_ordered_uint_array," +
 		/**/ "string_array, nullable_string_array, json, nullable_json FROM models")
 
-	if nil == err {
+	if err == nil {
 		defer rows.Close()
 
 		for rows.Next() {
@@ -69,8 +69,8 @@ func TestModel(t *testing.T) {
 	// expects
 	rows := sqlmock.NewRows(columns).
 		AddRow(1, "M", "{9,3,4,6,1}", nil, "{9,3,4,6,1}", nil,
-		"{9,3,4,6,1}", nil, "{9,3,4,6,1}", nil,
-		"{a,c,b}", nil, "{\"json\":1}", nil)
+			"{9,3,4,6,1}", nil, "{9,3,4,6,1}", nil,
+			"{a,c,b}", nil, "{\"json\":1}", nil)
 	mock.ExpectQuery("SELECT (.+) FROM models").
 		WillReturnRows(rows)
 

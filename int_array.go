@@ -1,11 +1,12 @@
 //
 // @project GeniusRabbit
-// @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2017
+// @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2017, 2020
 //
 
 package gosql
 
 import (
+	"database/sql"
 	"database/sql/driver"
 	"sort"
 )
@@ -17,15 +18,15 @@ type NullableIntArray []int
 
 // Value implements the driver.Valuer interface, []int field
 func (f NullableIntArray) Value() (driver.Value, error) {
-	if nil == f {
-		return nil, nil
+	if f == nil {
+		return sql.NullInt32{}, nil
 	}
 	return IntArrayEncode('{', '}', f).String(), nil
 }
 
 // Scan implements the driver.Valuer interface, []int field
 func (f *NullableIntArray) Scan(value interface{}) error {
-	if res, err := IntArrayDecode(value); nil == err {
+	if res, err := IntArrayDecode(value); err == nil {
 		*f = NullableIntArray(res)
 	} else {
 		return err
@@ -35,7 +36,7 @@ func (f *NullableIntArray) Scan(value interface{}) error {
 
 // MarshalJSON implements the json.Marshaler
 func (f NullableIntArray) MarshalJSON() ([]byte, error) {
-	if nil == f {
+	if f == nil {
 		return []byte("null"), nil
 	}
 	return IntArrayEncode('[', ']', f).Bytes(), nil
@@ -59,7 +60,7 @@ func (f *NullableIntArray) DecodeValue(v interface{}) error {
 		*f = NullableIntArray(val)
 	case []byte, string:
 		list, err := IntArrayDecode(v)
-		if nil == err {
+		if err == nil {
 			*f = NullableIntArray(list)
 		}
 		return err
@@ -81,11 +82,12 @@ func (f NullableIntArray) Len() int {
 
 // IndexOf array value
 func (f NullableIntArray) IndexOf(v int) int {
-	if nil != f {
-		for i, vl := range f {
-			if vl == v {
-				return i
-			}
+	if f == nil {
+		return -1
+	}
+	for i, vl := range f {
+		if vl == v {
+			return i
 		}
 	}
 	return -1
@@ -132,7 +134,7 @@ func (f NullableOrderedIntArray) Value() (driver.Value, error) {
 
 // Scan implements the driver.Valuer interface, []int field
 func (f *NullableOrderedIntArray) Scan(value interface{}) (err error) {
-	if err = (*NullableIntArray)(f).Scan(value); nil == err {
+	if err = (*NullableIntArray)(f).Scan(value); err == nil {
 		NullableIntArray(*f).Sort()
 	}
 	return
@@ -140,7 +142,7 @@ func (f *NullableOrderedIntArray) Scan(value interface{}) (err error) {
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *NullableOrderedIntArray) UnmarshalJSON(b []byte) (err error) {
-	if err = (*NullableIntArray)(f).UnmarshalJSON(b); nil == err {
+	if err = (*NullableIntArray)(f).UnmarshalJSON(b); err == nil {
 		NullableIntArray(*f).Sort()
 	}
 	return err
@@ -148,7 +150,7 @@ func (f *NullableOrderedIntArray) UnmarshalJSON(b []byte) (err error) {
 
 // DecodeValue implements the gocast.Decoder
 func (f *NullableOrderedIntArray) DecodeValue(v interface{}) (err error) {
-	if err = (*NullableIntArray)(f).DecodeValue(v); nil == err {
+	if err = (*NullableIntArray)(f).DecodeValue(v); err == nil {
 		NullableIntArray(*f).Sort()
 	}
 	return
@@ -166,11 +168,12 @@ func (f NullableOrderedIntArray) Len() int {
 
 // IndexOf array value
 func (f NullableOrderedIntArray) IndexOf(v int) int {
-	if nil != f {
-		i := sort.Search(len(f), func(i int) bool { return f[i] >= v })
-		if i >= 0 && i < len(f) && f[i] == v {
-			return i
-		}
+	if f == nil {
+		return -1
+	}
+	i := sort.Search(len(f), func(i int) bool { return f[i] >= v })
+	if i >= 0 && i < len(f) && f[i] == v {
+		return i
 	}
 	return -1
 }
@@ -213,7 +216,7 @@ func (f IntArray) Value() (driver.Value, error) {
 
 // Scan implements the driver.Valuer interface, []int field
 func (f *IntArray) Scan(value interface{}) error {
-	if nil == value {
+	if value == nil {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableIntArray)(f).Scan(value)
@@ -221,7 +224,7 @@ func (f *IntArray) Scan(value interface{}) error {
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *IntArray) UnmarshalJSON(b []byte) error {
-	if nil == b {
+	if b == nil {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableIntArray)(f).UnmarshalJSON(b)
@@ -229,7 +232,7 @@ func (f *IntArray) UnmarshalJSON(b []byte) error {
 
 // DecodeValue implements the gocast.Decoder
 func (f *IntArray) DecodeValue(v interface{}) error {
-	if nil == v {
+	if v == nil {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableIntArray)(f).DecodeValue(v)
@@ -291,7 +294,7 @@ func (f OrderedIntArray) Value() (driver.Value, error) {
 
 // Scan implements the driver.Valuer interface, []int field
 func (f *OrderedIntArray) Scan(value interface{}) (err error) {
-	if nil == value {
+	if value == nil {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableOrderedIntArray)(f).Scan(value)
@@ -299,7 +302,7 @@ func (f *OrderedIntArray) Scan(value interface{}) (err error) {
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *OrderedIntArray) UnmarshalJSON(b []byte) (err error) {
-	if nil == b {
+	if b == nil {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableOrderedIntArray)(f).UnmarshalJSON(b)
@@ -307,7 +310,7 @@ func (f *OrderedIntArray) UnmarshalJSON(b []byte) (err error) {
 
 // DecodeValue implements the gocast.Decoder
 func (f *OrderedIntArray) DecodeValue(v interface{}) error {
-	if nil == v {
+	if v == nil {
 		return ErrNullValueNotAllowed
 	}
 	return (*NullableOrderedIntArray)(f).DecodeValue(v)

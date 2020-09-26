@@ -1,12 +1,13 @@
 //
 // @project GeniusRabbit
-// @author Dmitry Ponomarev <demdxx@gmail.com> 2016
+// @author Dmitry Ponomarev <demdxx@gmail.com> 2016, 2020
 //
 
 package gosql
 
 import (
 	"bytes"
+	"database/sql"
 	"database/sql/driver"
 	"encoding/json"
 	"strings"
@@ -32,7 +33,7 @@ func (f *NullableStringArray) SetArray(arr []string) *NullableStringArray {
 // Value implements the driver.Valuer interface, []string field
 func (f NullableStringArray) Value() (driver.Value, error) {
 	if f == nil {
-		return nil, nil
+		return sql.NullString{}, nil
 	}
 	return encodeNullableStringArray('{', '}', byte(0), f).String(), nil
 }

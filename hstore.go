@@ -1,6 +1,6 @@
 //
 // @project GeniusRabbit
-// @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2017
+// @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2017, 2020
 //
 
 package gosql
@@ -42,7 +42,7 @@ func (h Hstore) Get(key string) (string, bool) {
 
 // Set value for key
 func (h *Hstore) Set(key, value string) {
-	if nil == h.Map {
+	if h.Map == nil {
 		h.Map = make(map[string]sql.NullString)
 	}
 	h.Map[key] = sql.NullString{String: value, Valid: true}

@@ -1,6 +1,6 @@
 //
 // @project GeniusRabbit
-// @author Dmitry Ponomarev <demdxx@gmail.com> 2016
+// @author Dmitry Ponomarev <demdxx@gmail.com> 2016, 2020
 //
 
 package gosql
@@ -12,7 +12,7 @@ type Char rune
 
 // Value implements the driver.Valuer interface, char field
 func (f Char) Value() (driver.Value, error) {
-	if 0 == f {
+	if f == 0 {
 		return " ", nil
 	}
 	return string(f), nil
@@ -21,12 +21,12 @@ func (f Char) Value() (driver.Value, error) {
 // Scan implements the sql.Scanner interface, char field
 func (f *Char) Scan(value interface{}) (err error) {
 	*f, err = decodeChar(value)
-	return
+	return err
 }
 
 // MarshalJSON implements the json.Marshaler
 func (f Char) MarshalJSON() ([]byte, error) {
-	if 0 == f {
+	if f == 0 {
 		return []byte("\" \""), nil
 	}
 	return []byte{'"', byte(f), '"'}, nil
@@ -35,7 +35,7 @@ func (f Char) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *Char) UnmarshalJSON(b []byte) (err error) {
 	*f, err = decodeChar(b)
-	return
+	return err
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ func (f *Char) UnmarshalJSON(b []byte) (err error) {
 ///////////////////////////////////////////////////////////////////////////////
 
 func decodeChar(value interface{}) (Char, error) {
-	if nil == value {
+	if value == nil {
 		return Char(0), ErrNullValueNotAllowed
 	}
 
