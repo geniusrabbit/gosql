@@ -3,7 +3,7 @@
 // @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2017, 2020
 //
 
-package gosql
+package pgtype
 
 import (
 	"database/sql"

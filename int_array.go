@@ -18,7 +18,7 @@ type NullableIntArray []int
 // Value implements the driver.Valuer interface, []int field
 func (f NullableIntArray) Value() (driver.Value, error) {
 	if f == nil {
-		return []byte(nil), nil
+		return nil, nil
 	}
 	return IntArrayEncode('{', '}', f).String(), nil
 }

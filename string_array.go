@@ -32,7 +32,7 @@ func (f *NullableStringArray) SetArray(arr []string) *NullableStringArray {
 // Value implements the driver.Valuer interface, []string field
 func (f NullableStringArray) Value() (driver.Value, error) {
 	if f == nil {
-		return []byte(nil), nil
+		return nil, nil
 	}
 	return encodeNullableStringArray('{', '}', byte(0), f).String(), nil
 }
