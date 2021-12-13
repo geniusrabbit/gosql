@@ -52,12 +52,10 @@ func decodeChar(value interface{}) (Char, error) {
 		if len(v) > 0 {
 			return Char(v[0]), nil
 		}
-		break
 	case string:
 		if len(v) > 0 {
 			return Char(v[0]), nil
 		}
-		break
 	}
 	return Char(0), ErrInvalidScan
 }

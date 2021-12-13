@@ -10,7 +10,6 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"strconv"
-	"strings"
 
 	"github.com/lib/pq/hstore"
 )
@@ -57,11 +56,20 @@ func (h *Hstore) Unset(key string) {
 
 // MarshalJSON method
 func (h Hstore) MarshalJSON() ([]byte, error) {
-	parts := make([]string, 0, len(h.Map))
-	for key, val := range h.Map {
-		parts = append(parts, key+"=>"+val.String)
+	val, err := h.Value()
+	if err != nil {
+		return nil, err
 	}
-	return json.Marshal(strings.Join(parts, ","))
+	return json.Marshal(string(val.([]byte)))
+}
+
+// UnmarshalJSON implements the json.Unmarshaller
+func (h *Hstore) UnmarshalJSON(b []byte) error {
+	var jsonString string
+	if err := json.Unmarshal(b, &jsonString); err != nil {
+		return err
+	}
+	return h.Scan([]byte(jsonString))
 }
 
 // String method implementation of Stringer

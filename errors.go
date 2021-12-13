@@ -9,7 +9,7 @@ import "errors"
 
 // Set of errors
 var (
-	ErrInvalidScan         = errors.New("Invalid field scan")
+	ErrInvalidScan         = errors.New("invalid field scan")
 	ErrNullValueNotAllowed = errors.New("nil value not allowed")
-	ErrInvalidDecodeValue  = errors.New("Invalid decode value")
+	ErrInvalidDecodeValue  = errors.New("invalid decode value")
 )

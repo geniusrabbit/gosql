@@ -1,6 +1,6 @@
 //
 // @project GeniusRabbit
-// @author Dmitry Ponomarev <demdxx@gmail.com> 2016, 2020
+// @author Dmitry Ponomarev <demdxx@gmail.com> 2016, 2020 – 2021
 //
 
 package gosql
@@ -34,21 +34,18 @@ func (f NullableStringArray) Value() (driver.Value, error) {
 	if f == nil {
 		return nil, nil
 	}
-	return encodeNullableStringArray('{', '}', byte(0), f).String(), nil
+	return encodeNullableStringArray('{', '}', '"', `""`, f).String(), nil
 }
 
 // Scan implements the driver.Valuer interface, []string field
 func (f *NullableStringArray) Scan(value interface{}) error {
-	switch value.(type) {
+	switch val := value.(type) {
 	case []byte:
-		*f = decodeNullableStringArray(string(value.([]byte)))
-		break
+		*f = decodeNullableStringArray(string(val), '{', '}', '"', `""`)
 	case string:
-		*f = decodeNullableStringArray(value.(string))
-		break
+		*f = decodeNullableStringArray(val, '{', '}', '"', `""`)
 	case nil:
 		*f = nil
-		break
 	}
 	return nil
 }
@@ -191,17 +188,29 @@ func (f StringArray) OneOf(vals []string) bool {
 /// Helpers
 ///////////////////////////////////////////////////////////////////////////////
 
-func decodeNullableStringArray(arr string) []string {
-	if strings.EqualFold(arr, "null") {
+func decodeNullableStringArray(arrSrc string, begin, end, border byte, escape string) []string {
+	if strings.EqualFold(arrSrc, "null") {
 		return nil
 	}
-	if arr == "{}" {
+	if arrSrc == string([]byte{begin, end}) {
 		return []string{}
 	}
-	return strings.Split(strings.Trim(arr, "{}"), ",")
+	arr := strings.Split(strings.Trim(arrSrc, "{}"), ",")
+	for i, val := range arr {
+		val = strings.TrimSpace(val)
+		if val == string([]byte{border, border}) {
+			arr[i] = ""
+		} else {
+			if strings.HasPrefix(val, `"`) && strings.HasSuffix(val, `"`) {
+				val = val[1 : len(val)-1]
+			}
+			arr[i] = strings.ReplaceAll(val, escape, string(border))
+		}
+	}
+	return arr
 }
 
-func encodeNullableStringArray(begin, end, border byte, arr []string) *bytes.Buffer {
+func encodeNullableStringArray(begin, end, border byte, escape string, arr []string) *bytes.Buffer {
 	var buff bytes.Buffer
 	buff.WriteByte(begin)
 
@@ -211,6 +220,9 @@ func encodeNullableStringArray(begin, end, border byte, arr []string) *bytes.Buf
 		}
 		if byte(0) != border {
 			buff.WriteByte(border)
+			if escape != "" {
+				v = strings.ReplaceAll(v, string(border), escape)
+			}
 		}
 		buff.WriteString(v)
 		if byte(0) != border {
