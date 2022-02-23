@@ -2,11 +2,9 @@ on:
   push:
     branches:
       - master
-      - v2
   pull_request:
     branches:
       - master
-      - v2
 
 name: run tests
 jobs:

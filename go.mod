@@ -1,4 +1,4 @@
-module github.com/geniusrabbit/gosql
+module github.com/geniusrabbit/gosql/v2
 
 go 1.18
 
