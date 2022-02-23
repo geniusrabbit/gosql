@@ -195,7 +195,7 @@ func decodeNullableStringArray(arrSrc string, begin, end, border byte, escape st
 	if arrSrc == string([]byte{begin, end}) {
 		return []string{}
 	}
-	arr := strings.Split(strings.Trim(arrSrc, "{}"), ",")
+	arr := strings.Split(strings.Trim(arrSrc, "{}[]"), ",")
 	for i, val := range arr {
 		val = strings.TrimSpace(val)
 		if val == string([]byte{border, border}) {
