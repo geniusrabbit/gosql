@@ -14,4 +14,4 @@ jobs:
         with:
           body:
             Please refer to
-            [CHANGELOG.md](https://github.com/go-redis/redis/blob/master/CHANGELOG.md) for details
+            [CHANGELOG.md](https://github.com/geniusrabbit/gosql/blob/master/CHANGELOG.md) for details
