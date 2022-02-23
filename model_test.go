@@ -13,22 +13,26 @@ import (
 	sqlmock "gopkg.in/DATA-DOG/go-sqlmock.v1"
 )
 
+type jsonTestItem struct {
+	JValue int `json:"json"`
+}
+
 // Model for test
 type Model struct {
 	ID                       uint64
 	Char                     Char
-	IntArray                 IntArray
-	NullableIntArray         NullableIntArray
-	OrderedIntArray          OrderedIntArray
-	NullableOrderedIntArray  NullableOrderedIntArray
-	UintArray                UintArray
-	NullableUintArray        NullableUintArray
-	OrderedUintArray         OrderedUintArray
-	NullableOrderedUintArray NullableOrderedUintArray
+	NumberArray              NumberArray[int]
+	NullableIntArray         NullableNumberArray[int]
+	OrderedIntArray          OrderedNumberArray[int]
+	NullableOrderedIntArray  NullableOrderedNumberArray[int]
+	UintArray                NumberArray[uint]
+	NullableUintArray        NullableNumberArray[uint]
+	OrderedUintArray         OrderedNumberArray[uint]
+	NullableOrderedUintArray NullableOrderedNumberArray[uint]
 	StringArray              StringArray
 	NullableStringArray      NullableStringArray
-	JSON                     JSON
-	NullableJSON             NullableJSON
+	JSON                     JSON[jsonTestItem]
+	NullableJSON             NullableJSON[int]
 }
 
 func selectIt(db *sql.DB) (m *Model, err error) {
@@ -43,7 +47,7 @@ func selectIt(db *sql.DB) (m *Model, err error) {
 		defer rows.Close()
 
 		for rows.Next() {
-			rows.Scan(&m.ID, &m.Char, &m.IntArray, &m.NullableIntArray, &m.OrderedIntArray, &m.NullableOrderedIntArray,
+			rows.Scan(&m.ID, &m.Char, &m.NumberArray, &m.NullableIntArray, &m.OrderedIntArray, &m.NullableOrderedIntArray,
 				/* * */ &m.UintArray, &m.NullableUintArray, &m.OrderedUintArray, &m.NullableOrderedUintArray,
 				/* * */ &m.StringArray, &m.NullableStringArray, &m.JSON, &m.NullableJSON)
 			break

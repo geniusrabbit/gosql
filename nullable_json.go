@@ -1,5 +1,6 @@
 //
-// @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2018, 2022
+// @project GeniusRabbit
+// @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2018
 //
 
 package gosql
@@ -9,29 +10,35 @@ import (
 	"encoding/json"
 )
 
-// JSON field
-type JSON[T any] struct {
-	value T
+// NullableJSON field
+type NullableJSON[T any] struct {
+	value *T
 }
 
 // String value
-func (f *JSON[T]) String() string {
-	if f == nil {
-		return "{}"
+func (f *NullableJSON[T]) String() string {
+	if f == nil || f.value == nil {
+		return "null"
 	}
 	data, _ := f.MarshalJSON()
 	return string(data)
 }
 
 // SetValue of json
-func (f *JSON[T]) SetValue(value any) error {
+func (f *NullableJSON[T]) SetValue(value any) error {
 	switch vl := value.(type) {
 	case T:
-		f.value = vl
+		if f.value == nil {
+			f.value = new(T)
+		}
+		*f.value = vl
 	case *T:
-		f.value = *vl
+		if f.value == nil {
+			f.value = new(T)
+		}
+		*f.value = *vl
 	case nil:
-		return ErrNullValueNotAllowed
+		f.value = nil
 	case string:
 		return f.UnmarshalJSON([]byte(vl))
 	case []byte:
@@ -43,7 +50,7 @@ func (f *JSON[T]) SetValue(value any) error {
 }
 
 // Value implements the driver.Valuer interface, json field interface
-func (f JSON[T]) Value() (_ driver.Value, err error) {
+func (f NullableJSON[T]) Value() (_ driver.Value, err error) {
 	if v, err := f.MarshalJSON(); err == nil && v != nil {
 		return string(v), nil
 	}
@@ -51,7 +58,7 @@ func (f JSON[T]) Value() (_ driver.Value, err error) {
 }
 
 // Scan implements the driver.Valuer interface, json field interface
-func (f *JSON[T]) Scan(value any) error {
+func (f *NullableJSON[T]) Scan(value any) error {
 	var data []byte
 	switch v := value.(type) {
 	case string:
@@ -59,25 +66,35 @@ func (f *JSON[T]) Scan(value any) error {
 	case []byte:
 		data = v
 	case nil:
-		return ErrNullValueNotAllowed
+		f.value = nil
+		return nil
 	default:
 		return ErrInvalidScan
 	}
-	return json.Unmarshal(data, &f.value)
+	if f.value == nil {
+		f.value = new(T)
+	}
+	return json.Unmarshal(data, f.value)
 }
 
 // MarshalJSON implements the json.Marshaler
-func (f JSON[T]) MarshalJSON() ([]byte, error) {
+func (f NullableJSON[T]) MarshalJSON() ([]byte, error) {
+	if f.value == nil {
+		return []byte("null"), nil
+	}
 	return json.Marshal(f.value)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller
-func (f *JSON[T]) UnmarshalJSON(data []byte) error {
+func (f *NullableJSON[T]) UnmarshalJSON(data []byte) error {
+	if f.value == nil {
+		f.value = new(T)
+	}
 	return json.Unmarshal(data, f.value)
 }
 
 // DecodeValue implements the gocast.Decoder
-func (f *JSON[T]) DecodeValue(v any) error {
+func (f *NullableJSON[T]) DecodeValue(v any) error {
 	switch val := v.(type) {
 	case []byte:
 		return f.UnmarshalJSON(val)
