@@ -11,7 +11,7 @@ import (
 
 // JSON field
 type JSON[T any] struct {
-	value T
+	Data T
 }
 
 // String value
@@ -27,9 +27,9 @@ func (f *JSON[T]) String() string {
 func (f *JSON[T]) SetValue(value any) error {
 	switch vl := value.(type) {
 	case T:
-		f.value = vl
+		f.Data = vl
 	case *T:
-		f.value = *vl
+		f.Data = *vl
 	case nil:
 		return ErrNullValueNotAllowed
 	case string:
@@ -63,17 +63,17 @@ func (f *JSON[T]) Scan(value any) error {
 	default:
 		return ErrInvalidScan
 	}
-	return json.Unmarshal(data, &f.value)
+	return json.Unmarshal(data, &f.Data)
 }
 
 // MarshalJSON implements the json.Marshaler
 func (f JSON[T]) MarshalJSON() ([]byte, error) {
-	return json.Marshal(f.value)
+	return json.Marshal(f.Data)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *JSON[T]) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, f.value)
+	return json.Unmarshal(data, f.Data)
 }
 
 // DecodeValue implements the gocast.Decoder

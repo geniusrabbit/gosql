@@ -12,12 +12,12 @@ import (
 
 // NullableJSON field
 type NullableJSON[T any] struct {
-	value *T
+	Data *T
 }
 
 // String value
 func (f *NullableJSON[T]) String() string {
-	if f == nil || f.value == nil {
+	if f == nil || f.Data == nil {
 		return "null"
 	}
 	data, _ := f.MarshalJSON()
@@ -28,17 +28,17 @@ func (f *NullableJSON[T]) String() string {
 func (f *NullableJSON[T]) SetValue(value any) error {
 	switch vl := value.(type) {
 	case T:
-		if f.value == nil {
-			f.value = new(T)
+		if f.Data == nil {
+			f.Data = new(T)
 		}
-		*f.value = vl
+		*f.Data = vl
 	case *T:
-		if f.value == nil {
-			f.value = new(T)
+		if f.Data == nil {
+			f.Data = new(T)
 		}
-		*f.value = *vl
+		*f.Data = *vl
 	case nil:
-		f.value = nil
+		f.Data = nil
 	case string:
 		return f.UnmarshalJSON([]byte(vl))
 	case []byte:
@@ -66,31 +66,31 @@ func (f *NullableJSON[T]) Scan(value any) error {
 	case []byte:
 		data = v
 	case nil:
-		f.value = nil
+		f.Data = nil
 		return nil
 	default:
 		return ErrInvalidScan
 	}
-	if f.value == nil {
-		f.value = new(T)
+	if f.Data == nil {
+		f.Data = new(T)
 	}
-	return json.Unmarshal(data, f.value)
+	return json.Unmarshal(data, f.Data)
 }
 
 // MarshalJSON implements the json.Marshaler
 func (f NullableJSON[T]) MarshalJSON() ([]byte, error) {
-	if f.value == nil {
+	if f.Data == nil {
 		return []byte("null"), nil
 	}
-	return json.Marshal(f.value)
+	return json.Marshal(f.Data)
 }
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *NullableJSON[T]) UnmarshalJSON(data []byte) error {
-	if f.value == nil {
-		f.value = new(T)
+	if f.Data == nil {
+		f.Data = new(T)
 	}
-	return json.Unmarshal(data, f.value)
+	return json.Unmarshal(data, f.Data)
 }
 
 // DecodeValue implements the gocast.Decoder
