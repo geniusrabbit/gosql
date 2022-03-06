@@ -14,6 +14,15 @@ type JSON[T any] struct {
 	Data T
 }
 
+// NewJSON creates new JSON object
+func NewJSON[T any](val any) (*JSON[T], error) {
+	var obj JSON[T]
+	if err := obj.SetValue(val); err != nil {
+		return nil, err
+	}
+	return &obj, nil
+}
+
 // String value
 func (f *JSON[T]) String() string {
 	if f == nil {
@@ -37,7 +46,11 @@ func (f *JSON[T]) SetValue(value any) error {
 	case []byte:
 		return f.UnmarshalJSON(vl)
 	default:
-		return ErrInvalidDecodeValue
+		data, err := json.Marshal(value)
+		if err != nil {
+			return err
+		}
+		return f.UnmarshalJSON(data)
 	}
 	return nil
 }
@@ -73,7 +86,7 @@ func (f JSON[T]) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *JSON[T]) UnmarshalJSON(data []byte) error {
-	return json.Unmarshal(data, f.Data)
+	return json.Unmarshal(data, &f.Data)
 }
 
 // DecodeValue implements the gocast.Decoder

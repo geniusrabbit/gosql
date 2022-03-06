@@ -15,6 +15,15 @@ type NullableJSON[T any] struct {
 	Data *T
 }
 
+// NewNullableJSON creates new JSON object
+func NewNullableJSON[T any](val any) (*NullableJSON[T], error) {
+	var obj NullableJSON[T]
+	if err := obj.SetValue(val); err != nil {
+		return nil, err
+	}
+	return &obj, nil
+}
+
 // String value
 func (f *NullableJSON[T]) String() string {
 	if f == nil || f.Data == nil {
@@ -44,7 +53,11 @@ func (f *NullableJSON[T]) SetValue(value any) error {
 	case []byte:
 		return f.UnmarshalJSON(vl)
 	default:
-		return ErrInvalidDecodeValue
+		data, err := json.Marshal(value)
+		if err != nil {
+			return err
+		}
+		return f.UnmarshalJSON(data)
 	}
 	return nil
 }
