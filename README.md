@@ -1,5 +1,10 @@
 # gosql
 
+[![Build Status](https://github.com/geniusrabbit/gosql/workflows/run%20tests/badge.svg)](https://github.com/geniusrabbit/gosql/actions?workflow=run%20tests)
+[![Go Report Card](https://goreportcard.com/badge/github.com/geniusrabbit/gosql)](https://goreportcard.com/report/github.com/geniusrabbit/gosql)
+[![GoDoc](https://godoc.org/github.com/geniusrabbit/gosql?status.svg)](https://godoc.org/github.com/geniusrabbit/gosql)
+[![Coverage Status](https://coveralls.io/repos/github/geniusrabbit/gosql/badge.svg)](https://coveralls.io/github/geniusrabbit/gosql)
+
 Library of standart sql collections an types like:
 
  * Char
