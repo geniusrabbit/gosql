@@ -47,7 +47,7 @@ func selectIt(db *sql.DB) (m *Model, err error) {
 		defer rows.Close()
 
 		for rows.Next() {
-			rows.Scan(&m.ID, &m.Char, &m.NumberArray, &m.NullableIntArray, &m.OrderedIntArray, &m.NullableOrderedIntArray,
+			_ = rows.Scan(&m.ID, &m.Char, &m.NumberArray, &m.NullableIntArray, &m.OrderedIntArray, &m.NullableOrderedIntArray,
 				/* * */ &m.UintArray, &m.NullableUintArray, &m.OrderedUintArray, &m.NullableOrderedUintArray,
 				/* * */ &m.StringArray, &m.NullableStringArray, &m.JSON, &m.NullableJSON)
 			break
