@@ -100,10 +100,12 @@ func (f NullableJSON[T]) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *NullableJSON[T]) UnmarshalJSON(data []byte) error {
-	if f.Data == nil {
-		f.Data = new(T)
+	target := new(T)
+	err := json.Unmarshal(data, target)
+	if err == nil {
+		f.Data = target
 	}
-	return json.Unmarshal(data, f.Data)
+	return err
 }
 
 // DecodeValue implements the gocast.Decoder

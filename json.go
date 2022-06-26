@@ -76,7 +76,7 @@ func (f *JSON[T]) Scan(value any) error {
 	default:
 		return ErrInvalidScan
 	}
-	return json.Unmarshal(data, &f.Data)
+	return f.UnmarshalJSON(data)
 }
 
 // MarshalJSON implements the json.Marshaler
@@ -86,6 +86,7 @@ func (f JSON[T]) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *JSON[T]) UnmarshalJSON(data []byte) error {
+	f.Data = *new(T)
 	return json.Unmarshal(data, &f.Data)
 }
 
