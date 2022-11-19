@@ -1,6 +1,6 @@
 //
 // @project GeniusRabbit
-// @author Dmitry Ponomarev <demdxx@gmail.com> 2016, 2020
+// @author Dmitry Ponomarev <demdxx@gmail.com> 2016, 2020, 2022
 //
 
 package gosql
