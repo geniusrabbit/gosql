@@ -82,7 +82,7 @@ func TestModel(t *testing.T) {
 	if m, err := selectIt(db); err != nil {
 		t.Errorf("error was not expected while updating stats: %s", err)
 	} else {
-		if data, err := json.MarshalIndent(m, "", "    "); nil == err {
+		if data, err := json.MarshalIndent(m, "", "    "); err == nil {
 			t.Log(string(data))
 		} else {
 			t.Error(err)

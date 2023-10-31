@@ -6,33 +6,31 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
-make: *** No rule to make target `all'.  Stop.
 
-
-# Make data base, printed on Sat Nov 19 15:37:53 2022
+# Make data base, printed on Tue Oct 31 18:14:14 2023
 
 # Variables
 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
- 
 ?F = $(notdir $?)
+# environment
+VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
+# environment
+NVM_INC = /Users/dem/.nvm/versions/node/v16.20.1/include/node
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
-# environment
-CPPFLAGS = -I/usr/local/opt/openblas/include
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /Users/dem/workspace/opensource/gosql
+CURDIR := /Users/dem/Workspace/opensource/gosql
 # makefile
 SHELL = /bin/sh
 # environment
-VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"en-gb","osLocale":"en-es","availableLanguages":{},"_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
 # makefile (from `Makefile', line 1)
@@ -42,37 +40,33 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-INFOPATH = /usr/local/share/info:
+INFOPATH = /opt/homebrew/share/info:
 # environment
 VSCODE_CWD = /
 # environment
-GOPROXY = https://goproxy.io,direct
+GOPROXY = https://proxy.golang.org,direct
 # environment
-PATH = /usr/local/opt/node@16/bin:/opt/homebrew/opt/openssl@1.1/bin:/Users/dem/go/bin:/opt/homebrew/opt/icu4c/sbin:/opt/homebrew/opt/icu4c/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/usr/local/go/bin:/opt/X11/bin:/Library/Apple/usr/bin:/Users/dem/.cargo/bin
-# environment
-DOCKER_DEFAULT_GOARCH = arm
+PATH = /Users/dem/.nvm/versions/node/v16.20.1/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/usr/local/share/dotnet:~/.dotnet/tools:/usr/local/go/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/dem/go/bin
 # environment
 GOPATH = /Users/dem/go
 # environment
-ELECTRON_RUN_AS_NODE = 1
+NVM_BIN = /Users/dem/.nvm/versions/node/v16.20.1/bin
 # environment
-LDFLAGS = -L/usr/local/opt/openblas/lib
+ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.ZBtbAVT9sN/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.r3ReU95XXc/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
-DISPLAY = /private/tmp/com.apple.launchd.9ovYcPnhB5/org.xquartz:0
+PWD = /Users/dem/Workspace/opensource/gosql
 # environment
-PWD = /Users/dem/workspace/opensource/gosql
-# environment
-HOMEBREW_CELLAR = /usr/local/Cellar
+HOMEBREW_CELLAR = /opt/homebrew/Cellar
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
-MANPATH = /usr/local/share/man::
+MANPATH = /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/share/man:/Library/Developer/CommandLineTools/usr/share/man:/Library/Developer/CommandLineTools/Toolchains/XcodeDefault.xctoolchain/usr/share/man:/Users/dem/.nvm/versions/node/v16.20.1/share/man:/opt/homebrew/share/man::
 # environment
 GOMODCACHE = /Users/dem/go/pkg/mod
 # environment
@@ -80,11 +74,13 @@ HOME = /Users/dem
 # default
 MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/dem/Library/Application Support/Code/CachedData/6261075646f055b99068d3688932416f2346dd3b
+VSCODE_CODE_CACHE_PATH = /Users/dem/Library/Application Support/Code/CachedData/f1b07bd25dfad64b0167beb15359ae573aecd2cc
 # environment
 LOGNAME = dem
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+NVM_CD_FLAGS = -q
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -110,11 +106,11 @@ MAKE_COMMAND := /Library/Developer/CommandLineTools/usr/bin/make
 # default
 .VARIABLES := 
 # environment
-TMPDIR = /var/folders/sd/h9mn_6ss64l0sq6cg0f2408h0000gn/T/
+TMPDIR = /var/folders/15/sxnh_hg94zb4xz4fp69skvs80000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/dem/Library/Application Support/Code/1.73.1-main.sock
+VSCODE_IPC_HOOK = /Users/dem/Library/Application Support/Code/1.83-main.sock
 # environment
 MallocNanoZone = 0
 # makefile
@@ -124,15 +120,17 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.105303624.105303630
+NVM_DIR = /Users/dem/.nvm
 # environment
-HOMEBREW_PREFIX = /usr/local
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.26910363.26910369
+# environment
+HOMEBREW_PREFIX = /opt/homebrew
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
 # environment
-HOMEBREW_REPOSITORY = /usr/local/Homebrew
+HOMEBREW_REPOSITORY = /opt/homebrew
 # environment
 __CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x0
 # environment
@@ -142,25 +140,19 @@ MAKEFILES :=
 # automatic
 <F = $(notdir $<)
 # environment
-GOPRIVATE = *gitlab*
-# environment
 LC_ALL = C
 # automatic
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
-# default
-.INCLUDE_DIRS = /usr/local/include
 # environment
 MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-DOCKER_HOST = ssh://pi@raspberrypi.local
-# environment
-VSCODE_PID = 21031
+VSCODE_PID = 1363
 # variable set hash-table stats:
-# Load=72/1024=7%, Rehash=0, Collisions=2/97=2%
+# Load=70/1024=7%, Rehash=0, Collisions=2/94=2%
 
 # Pattern-specific Variable Values
 
@@ -168,7 +160,7 @@ VSCODE_PID = 21031
 
 # Directories
 
-# . (device 16777232, inode 6886728): 25 files, no impossibilities.
+# . (device 16777232, inode 3209637): 25 files, no impossibilities.
 
 # 25 files, no impossibilities in 1 directories.
 
@@ -184,7 +176,6 @@ all:
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has not been updated.
- 
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
@@ -290,6 +281,8 @@ lint:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat Nov 19 15:37:53 2022
+# Finished Make data base on Tue Oct 31 18:14:14 2023
 
  
+make: *** No rule to make target `all'.  Stop.
+
