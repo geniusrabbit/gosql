@@ -6,8 +6,11 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+ 
+make: *** No rule to make target `all'.  Stop.
 
-# Make data base, printed on Tue Oct 31 18:14:14 2023
+
+# Make data base, printed on Wed Nov  1 11:53:41 2023
 
 # Variables
 
@@ -19,6 +22,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
 # environment
 NVM_INC = /Users/dem/.nvm/versions/node/v16.20.1/include/node
+ 
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -160,9 +164,9 @@ VSCODE_PID = 1363
 
 # Directories
 
-# . (device 16777232, inode 3209637): 25 files, no impossibilities.
+# . (device 16777232, inode 3209637): 27 files, no impossibilities.
 
-# 25 files, no impossibilities in 1 directories.
+# 27 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -177,6 +181,7 @@ all:
 #  File does not exist.
 #  File has not been updated.
 # variable set hash-table stats:
+ 
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 .PHONY: fmt test tidy bench lint help
@@ -281,8 +286,6 @@ lint:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Tue Oct 31 18:14:14 2023
+# Finished Make data base on Wed Nov  1 11:53:41 2023
 
  
-make: *** No rule to make target `all'.  Stop.
-
