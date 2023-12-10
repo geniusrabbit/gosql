@@ -23,6 +23,15 @@ func NewJSON[T any](val any) (*JSON[T], error) {
 	return &obj, nil
 }
 
+// MustJSON creates new JSON object
+func MustJSON[T any](val any) *JSON[T] {
+	obj, err := NewJSON[T](val)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
 // String value
 func (f *JSON[T]) String() string {
 	if f == nil {

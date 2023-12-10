@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/stretchr/testify v1.8.4
-	golang.org/x/exp v0.0.0-20231006140011-7918f672742d
+	golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb
 	gopkg.in/DATA-DOG/go-sqlmock.v1 v1.3.0
 )
 

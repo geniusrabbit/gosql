@@ -24,6 +24,15 @@ func NewNullableJSON[T any](val any) (*NullableJSON[T], error) {
 	return &obj, nil
 }
 
+// MustNullableJSON creates new JSON object
+func MustNullableJSON[T any](val any) *NullableJSON[T] {
+	obj, err := NewNullableJSON[T](val)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
 // String value
 func (f *NullableJSON[T]) String() string {
 	if f == nil || f.Data == nil {

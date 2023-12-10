@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Wed Nov  1 11:53:41 2023
+# Make data base, printed on Sun Dec 10 17:47:51 2023
 
 # Variables
 
@@ -22,7 +22,6 @@ make: *** No rule to make target `all'.  Stop.
 VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
 # environment
 NVM_INC = /Users/dem/.nvm/versions/node/v16.20.1/include/node
- 
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -37,6 +36,7 @@ SHELL = /bin/sh
 VSCODE_NLS_CONFIG = {"locale":"en-gb","osLocale":"en-es","availableLanguages":{},"_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
+ 
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
@@ -56,11 +56,13 @@ GOPATH = /Users/dem/go
 # environment
 NVM_BIN = /Users/dem/.nvm/versions/node/v16.20.1/bin
 # environment
+LaunchInstanceID = 1C567B53-48E5-4227-B97F-1ED2F0C55777
+# environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.r3ReU95XXc/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.NMIOoGLGXn/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -78,7 +80,7 @@ HOME = /Users/dem
 # default
 MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/dem/Library/Application Support/Code/CachedData/f1b07bd25dfad64b0167beb15359ae573aecd2cc
+VSCODE_CODE_CACHE_PATH = /Users/dem/Library/Application Support/Code/CachedData/1a5daa3a0231a0fbba4f14db7ec463cf99d7768e
 # environment
 LOGNAME = dem
 # environment
@@ -114,7 +116,7 @@ TMPDIR = /var/folders/15/sxnh_hg94zb4xz4fp69skvs80000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/dem/Library/Application Support/Code/1.83-main.sock
+VSCODE_IPC_HOOK = /Users/dem/Library/Application Support/Code/1.84-main.sock
 # environment
 MallocNanoZone = 0
 # makefile
@@ -126,7 +128,7 @@ MFLAGS = -Rrqp
 # environment
 NVM_DIR = /Users/dem/.nvm
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.26910363.26910369
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.36957161.36957167
 # environment
 HOMEBREW_PREFIX = /opt/homebrew
 # automatic
@@ -145,6 +147,8 @@ MAKEFILES :=
 <F = $(notdir $<)
 # environment
 LC_ALL = C
+# environment
+SECURITYSESSIONID = 186ab
 # automatic
 ^F = $(notdir $^)
 # default
@@ -154,9 +158,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 1363
+VSCODE_PID = 1342
 # variable set hash-table stats:
-# Load=70/1024=7%, Rehash=0, Collisions=2/94=2%
+# Load=72/1024=7%, Rehash=0, Collisions=2/96=2%
 
 # Pattern-specific Variable Values
 
@@ -164,7 +168,7 @@ VSCODE_PID = 1363
 
 # Directories
 
-# . (device 16777232, inode 3209637): 27 files, no impossibilities.
+# . (device 16777231, inode 3209637): 27 files, no impossibilities.
 
 # 27 files, no impossibilities in 1 directories.
 
@@ -181,7 +185,6 @@ all:
 #  File does not exist.
 #  File has not been updated.
 # variable set hash-table stats:
- 
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 .PHONY: fmt test tidy bench lint help
@@ -226,6 +229,7 @@ help:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
 #  commands to execute (from `Makefile', line 27):
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' Makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 	
@@ -286,6 +290,6 @@ lint:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Wed Nov  1 11:53:41 2023
+# Finished Make data base on Sun Dec 10 17:47:51 2023
 
  
