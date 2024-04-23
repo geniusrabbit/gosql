@@ -3,8 +3,8 @@ module github.com/geniusrabbit/gosql/v2
 go 1.20
 
 require (
-	github.com/stretchr/testify v1.8.4
-	golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb
+	github.com/stretchr/testify v1.9.0
+	golang.org/x/exp v0.0.0-20240416160154-fe59bbe5cc7f
 	gopkg.in/DATA-DOG/go-sqlmock.v1 v1.3.0
 )
 

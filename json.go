@@ -5,6 +5,7 @@
 package gosql
 
 import (
+	"bytes"
 	"database/sql/driver"
 	"encoding/json"
 )
@@ -96,6 +97,12 @@ func (f JSON[T]) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *JSON[T]) UnmarshalJSON(data []byte) error {
 	f.Data = *new(T)
+	if len(data) == 0 {
+		return nil
+	}
+	if data = bytes.TrimSpace(data); len(data) == 0 {
+		return nil
+	}
 	return json.Unmarshal(data, &f.Data)
 }
 

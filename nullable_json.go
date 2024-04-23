@@ -6,6 +6,7 @@
 package gosql
 
 import (
+	"bytes"
 	"database/sql/driver"
 	"encoding/json"
 )
@@ -93,10 +94,7 @@ func (f *NullableJSON[T]) Scan(value any) error {
 	default:
 		return ErrInvalidScan
 	}
-	if f.Data == nil {
-		f.Data = new(T)
-	}
-	return json.Unmarshal(data, f.Data)
+	return f.UnmarshalJSON(data)
 }
 
 // MarshalJSON implements the json.Marshaler
@@ -109,7 +107,14 @@ func (f NullableJSON[T]) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaller
 func (f *NullableJSON[T]) UnmarshalJSON(data []byte) error {
+	f.Data = nil
 	target := new(T)
+	if len(data) == 0 {
+		return nil
+	}
+	if data = bytes.TrimSpace(data); len(data) == 0 {
+		return nil
+	}
 	err := json.Unmarshal(data, target)
 	if err == nil {
 		f.Data = target

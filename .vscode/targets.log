@@ -6,11 +6,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
-make: *** No rule to make target `all'.  Stop.
 
-
-# Make data base, printed on Sun Dec 10 17:47:51 2023
+# Make data base, printed on Sun Dec 10 21:33:45 2023
 
 # Variables
 
@@ -36,7 +33,6 @@ SHELL = /bin/sh
 VSCODE_NLS_CONFIG = {"locale":"en-gb","osLocale":"en-es","availableLanguages":{},"_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
- 
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
@@ -56,13 +52,13 @@ GOPATH = /Users/dem/go
 # environment
 NVM_BIN = /Users/dem/.nvm/versions/node/v16.20.1/bin
 # environment
-LaunchInstanceID = 1C567B53-48E5-4227-B97F-1ED2F0C55777
+LaunchInstanceID = 69383968-AA98-498A-8AAA-3254B1DCF719
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.NMIOoGLGXn/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.nyPO41M0kj/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -80,7 +76,7 @@ HOME = /Users/dem
 # default
 MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/dem/Library/Application Support/Code/CachedData/1a5daa3a0231a0fbba4f14db7ec463cf99d7768e
+VSCODE_CODE_CACHE_PATH = /Users/dem/Library/Application Support/Code/CachedData/af28b32d7e553898b2a91af498b1fb666fdebe0c
 # environment
 LOGNAME = dem
 # environment
@@ -116,7 +112,7 @@ TMPDIR = /var/folders/15/sxnh_hg94zb4xz4fp69skvs80000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/dem/Library/Application Support/Code/1.84-main.sock
+VSCODE_IPC_HOOK = /Users/dem/Library/Application Support/Code/1.85-main.sock
 # environment
 MallocNanoZone = 0
 # makefile
@@ -128,7 +124,7 @@ MFLAGS = -Rrqp
 # environment
 NVM_DIR = /Users/dem/.nvm
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.36957161.36957167
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.45492677.45492683
 # environment
 HOMEBREW_PREFIX = /opt/homebrew
 # automatic
@@ -158,7 +154,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 1342
+VSCODE_PID = 1571
 # variable set hash-table stats:
 # Load=72/1024=7%, Rehash=0, Collisions=2/96=2%
 
@@ -168,9 +164,9 @@ VSCODE_PID = 1342
 
 # Directories
 
-# . (device 16777231, inode 3209637): 27 files, no impossibilities.
+# . (device 16777233, inode 3209637): 28 files, no impossibilities.
 
-# 27 files, no impossibilities in 1 directories.
+# 28 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -229,7 +225,6 @@ help:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
- 
 #  commands to execute (from `Makefile', line 27):
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' Makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 	
@@ -290,6 +285,8 @@ lint:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sun Dec 10 17:47:51 2023
+# Finished Make data base on Sun Dec 10 21:33:45 2023
 
  
+make: *** No rule to make target `all'.  Stop.
+
