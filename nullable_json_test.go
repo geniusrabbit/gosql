@@ -31,4 +31,20 @@ func TestNullableJSON(t *testing.T) {
 		assert.NoError(t, js.Scan([]byte(nil)), "scan nil byte")
 		assert.NoError(t, js.Scan([]byte(" ")), "scan empty string")
 	})
+
+	t.Run("data_or", func(t *testing.T) {
+		js, _ := NewNullableJSON[map[string]string](map[string]any{
+			"name":   "Yoda",
+			"number": "1",
+		})
+		assert.Equal(t, "Yoda", js.DataOr(map[string]string{})["name"])
+		assert.Equal(t, "1", js.DataOr(map[string]string{})["number"])
+		assert.Equal(t, "Yoda", js.DataOr(map[string]string{"name": "Luke"})["name"])
+		assert.Equal(t, "1", js.DataOr(map[string]string{"number": "2"})["number"])
+
+		null, _ := NewNullableJSON[map[string]string](nil)
+		assert.Equal(t, "Luke", null.DataOr(map[string]string{"name": "Luke"})["name"])
+		assert.Equal(t, "2", null.DataOr(map[string]string{"number": "2"})["number"])
+		assert.Nil(t, null.DataOr(nil))
+	})
 }

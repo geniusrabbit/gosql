@@ -1,4 +1,4 @@
-# gosql
+# GoSQL types collection
 
 [![Build Status](https://github.com/geniusrabbit/gosql/workflows/run%20tests/badge.svg)](https://github.com/geniusrabbit/gosql/actions?workflow=run%20tests)
 [![Go Report Card](https://goreportcard.com/badge/github.com/geniusrabbit/gosql)](https://goreportcard.com/report/github.com/geniusrabbit/gosql)
@@ -7,12 +7,10 @@
 
 Library of standart sql collections an types like:
 
- * Char
- * NumberArrays generic (Ordered, Nullable) Numbers only (int, float, ...)
- * StringArray
- * JSON generic with any type of value `structs`, `scalars`, ...
-
-New version supports generics from `go1.8` to make easear using of data processing.
+* Char
+* NumberArrays generic (Ordered, Nullable) Numbers only (int, float, ...)
+* StringArray
+* JSON generic with any type of value `structs`, `scalars`, ...
 
 ```go
 import (
@@ -30,6 +28,6 @@ type Model struct {
 }
 ```
 
-# License MIT
+## License MIT
 
 [LICENSE](LICENSE)

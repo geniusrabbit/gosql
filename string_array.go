@@ -38,7 +38,7 @@ func (f NullableStringArray) Value() (driver.Value, error) {
 }
 
 // Scan implements the driver.Valuer interface, []string field
-func (f *NullableStringArray) Scan(value interface{}) error {
+func (f *NullableStringArray) Scan(value any) error {
 	switch val := value.(type) {
 	case []byte:
 		*f = decodeNullableStringArray(string(val), '{', '}', '"', `""`)
@@ -69,7 +69,7 @@ func (f *NullableStringArray) UnmarshalJSON(b []byte) error {
 }
 
 // DecodeValue implements the gocast.Decoder
-func (f *NullableStringArray) DecodeValue(v interface{}) error {
+func (f *NullableStringArray) DecodeValue(v any) error {
 	switch val := v.(type) {
 	case []string:
 		*f = NullableStringArray(val)
@@ -146,7 +146,7 @@ func (f StringArray) Value() (driver.Value, error) {
 }
 
 // Scan implements the driver.Valuer interface, []string field
-func (f *StringArray) Scan(value interface{}) error {
+func (f *StringArray) Scan(value any) error {
 	if value == nil {
 		return ErrNullValueNotAllowed
 	}
@@ -162,7 +162,7 @@ func (f *StringArray) UnmarshalJSON(b []byte) error {
 }
 
 // DecodeValue implements the gocast.Decoder
-func (f *StringArray) DecodeValue(v interface{}) error {
+func (f *StringArray) DecodeValue(v any) error {
 	if v == nil {
 		return ErrNullValueNotAllowed
 	}

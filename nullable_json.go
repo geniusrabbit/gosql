@@ -43,6 +43,14 @@ func (f *NullableJSON[T]) String() string {
 	return string(data)
 }
 
+// DataOr returns data or default value
+func (f *NullableJSON[T]) DataOr(def T) T {
+	if f == nil || f.Data == nil {
+		return def
+	}
+	return *f.Data
+}
+
 // SetValue of json
 func (f *NullableJSON[T]) SetValue(value any) error {
 	switch vl := value.(type) {

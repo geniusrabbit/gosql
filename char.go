@@ -19,7 +19,7 @@ func (f Char) Value() (driver.Value, error) {
 }
 
 // Scan implements the sql.Scanner interface, char field
-func (f *Char) Scan(value interface{}) (err error) {
+func (f *Char) Scan(value any) (err error) {
 	*f, err = decodeChar(value)
 	return err
 }
@@ -42,7 +42,7 @@ func (f *Char) UnmarshalJSON(b []byte) (err error) {
 /// Helpers
 ///////////////////////////////////////////////////////////////////////////////
 
-func decodeChar(value interface{}) (Char, error) {
+func decodeChar(value any) (Char, error) {
 	if value == nil {
 		return Char(0), ErrNullValueNotAllowed
 	}
