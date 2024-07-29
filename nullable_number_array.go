@@ -18,6 +18,10 @@ func (f NullableNumberArray[T]) Value() (driver.Value, error) {
 
 // Scan implements the driver.Valuer interface, []int field
 func (f *NullableNumberArray[T]) Scan(value any) error {
+	if value == nil {
+		*f = nil
+		return nil
+	}
 	if res, err := ArrayNumberDecode[T](value, '{', '}'); err == nil {
 		*f = NullableNumberArray[T](res)
 	} else {
@@ -44,6 +48,8 @@ func (f *NullableNumberArray[T]) UnmarshalJSON(b []byte) error {
 // DecodeValue implements the gocast.Decoder
 func (f *NullableNumberArray[T]) DecodeValue(v any) error {
 	switch val := v.(type) {
+	case nil:
+		*f = nil
 	case []T:
 		*f = NullableNumberArray[T](val)
 	case NullableNumberArray[T]:

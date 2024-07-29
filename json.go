@@ -47,10 +47,15 @@ func (f *JSON[T]) SetValue(value any) error {
 	switch vl := value.(type) {
 	case T:
 		f.Data = vl
+		return nil
 	case *T:
 		f.Data = *vl
+		return nil
 	case nil:
 		return ErrNullValueNotAllowed
+	}
+
+	switch vl := value.(type) {
 	case string:
 		return f.UnmarshalJSON([]byte(vl))
 	case []byte:
@@ -62,12 +67,12 @@ func (f *JSON[T]) SetValue(value any) error {
 		}
 		return f.UnmarshalJSON(data)
 	}
-	return nil
 }
 
 // Value implements the driver.Valuer interface, json field interface
-func (f JSON[T]) Value() (_ driver.Value, err error) {
-	if v, err := f.MarshalJSON(); err == nil && v != nil {
+func (f JSON[T]) Value() (driver.Value, error) {
+	v, err := f.MarshalJSON()
+	if err == nil && v != nil {
 		return string(v), nil
 	}
 	return nil, err
@@ -80,6 +85,8 @@ func (f *JSON[T]) Scan(value any) error {
 	case string:
 		data = []byte(v)
 	case []byte:
+		data = v
+	case json.RawMessage:
 		data = v
 	case nil:
 		return ErrNullValueNotAllowed
@@ -113,6 +120,8 @@ func (f *JSON[T]) DecodeValue(v any) error {
 		return f.UnmarshalJSON(val)
 	case string:
 		return f.UnmarshalJSON([]byte(val))
+	case json.RawMessage:
+		return f.UnmarshalJSON(val)
 	default:
 		return f.SetValue(v)
 	}

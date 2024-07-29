@@ -19,7 +19,8 @@ func (f NullableOrderedNumberArray[T]) Value() (driver.Value, error) {
 // Scan implements the driver.Valuer interface, []int field
 func (f *NullableOrderedNumberArray[T]) Scan(value any) error {
 	if value == nil {
-		return ErrNullValueNotAllowed
+		*f = nil
+		return nil
 	}
 	return (*NullableNumberArray[T])(f).Scan(value)
 }
@@ -39,9 +40,6 @@ func (f NullableOrderedNumberArray[T]) MarshalJSON() ([]byte, error) {
 
 // DecodeValue implements the gocast.Decoder
 func (f *NullableOrderedNumberArray[T]) DecodeValue(v any) error {
-	if v == nil {
-		return ErrNullValueNotAllowed
-	}
 	return (*NullableNumberArray[T])(f).DecodeValue(v)
 }
 
