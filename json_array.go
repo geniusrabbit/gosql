@@ -36,9 +36,9 @@ func (f JSONArray[T]) String() string {
 func (f *JSONArray[T]) SetValue(value any) error {
 	switch vl := value.(type) {
 	case []T:
-		*f = vl
+		*f = append(*f, vl...)
 	case *[]T:
-		*f = *vl
+		*f = append(*f, *vl...)
 	case nil:
 		return ErrNullValueNotAllowed
 	default:
@@ -101,7 +101,7 @@ func (f *JSONArray[T]) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &res); err != nil {
 		return err
 	}
-	*f = (*f)[:0]
+	*f = append((*f)[:0], res...)
 	return nil
 }
 

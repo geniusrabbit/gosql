@@ -56,4 +56,11 @@ func TestNullableJSONArray(t *testing.T) {
 		v, _ := js.Value()
 		assert.Nil(t, v)
 	})
+
+	t.Run("scan", func(t *testing.T) {
+		var js NullableJSONArray[int]
+		if assert.NoError(t, js.Scan([]byte("[1,2,3]"))) {
+			assert.ElementsMatch(t, []int{1, 2, 3}, js)
+		}
+	})
 }

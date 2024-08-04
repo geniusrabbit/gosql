@@ -1,6 +1,8 @@
 package gosql
 
-import "database/sql/driver"
+import (
+	"database/sql/driver"
+)
 
 // NullableJSONArray object
 type NullableJSONArray[T any] JSONArray[T]
@@ -43,7 +45,7 @@ func (f NullableJSONArray[T]) Value() (driver.Value, error) {
 }
 
 // Scan value from database
-func (f *NullableJSONArray[T]) Scan(value interface{}) error {
+func (f *NullableJSONArray[T]) Scan(value any) error {
 	if value == nil {
 		*f = nil
 		return nil
