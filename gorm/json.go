@@ -57,10 +57,7 @@ func jsonGormDBDataType(db *gorm.DB, nullable bool) string {
 	case "sqlserver":
 		return "nvarchar(max)"
 	case "ydb":
-		if nullable {
-			return "Optional<JSONDocument>"
-		}
-		return "JSONDocument"
+		return "JsonDocument"
 	case "clickhouse":
 		if nullable {
 			return "Nullable(JSON)"
