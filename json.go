@@ -1,5 +1,5 @@
 //
-// @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2018, 2022
+// @author Dmitry Ponomarev <demdxx@gmail.com> 2016 – 2018, 2022, 2025
 //
 
 package gosql

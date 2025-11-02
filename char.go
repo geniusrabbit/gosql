@@ -56,6 +56,14 @@ func decodeChar(value any) (Char, error) {
 		if len(v) > 0 {
 			return Char(v[0]), nil
 		}
+	case rune:
+		return Char(v), nil
+	case int:
+		return Char(v), nil
+	case uint16:
+		return Char(v), nil
+	case uint32:
+		return Char(v), nil
 	}
 	return Char(0), ErrInvalidScan
 }
