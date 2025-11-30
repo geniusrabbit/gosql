@@ -1,14 +1,32 @@
 package gorm
 
 import (
-	"github.com/geniusrabbit/gosql/v2"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
+
+	"github.com/geniusrabbit/gosql/v2"
 )
 
 // JSON field type declaration with GORM type methods
 type JSON[T any] struct {
 	gosql.JSON[T]
+}
+
+// NewJSON creates new JSON object
+// This function is used to create a new JSON object with the provided data.
+// It wraps the gosql.NewJSON function to return a GORM-compatible JSON type.
+// If an error occurs during the creation, it returns nil and the error.
+func NewJSON[T any](data T) (*JSON[T], error) {
+	jdata, err := gosql.NewJSON[T](data)
+	if err != nil {
+		return nil, err
+	}
+	return &JSON[T]{*jdata}, nil
+}
+
+// MustJSON creates new JSON object
+func MustJSON[T any](data T) *JSON[T] {
+	return &JSON[T]{*gosql.MustJSON[T](data)}
 }
 
 // GormDataType gorm common data type
@@ -29,6 +47,23 @@ func (j *JSON[T]) Data() T {
 // NullableJSON field type declaration with GORM type methods
 type NullableJSON[T any] struct {
 	gosql.NullableJSON[T]
+}
+
+// NewNullableJSON creates new NullableJSON object
+// This function is used to create a new NullableJSON object with the provided data.
+// It wraps the gosql.NewNullableJSON function to return a GORM-compatible NullableJSON type.
+// If an error occurs during the creation, it returns nil and the error.
+func NewNullableJSON[T any](data *T) (*NullableJSON[T], error) {
+	jdata, err := gosql.NewNullableJSON[T](data)
+	if err != nil {
+		return nil, err
+	}
+	return &NullableJSON[T]{*jdata}, nil
+}
+
+// MustNullableJSON creates new NullableJSON object
+func MustNullableJSON[T any](data *T) *NullableJSON[T] {
+	return &NullableJSON[T]{*gosql.MustNullableJSON[T](data)}
 }
 
 // GormDataType gorm common data type
