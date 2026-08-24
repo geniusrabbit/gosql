@@ -47,4 +47,85 @@ func TestNullableJSON(t *testing.T) {
 		assert.Equal(t, "2", null.DataOr(map[string]string{"number": "2"})["number"])
 		assert.Nil(t, null.DataOr(nil))
 	})
+
+	t.Run("set_value", func(t *testing.T) {
+		var js NullableJSON[map[string]string]
+		assert.NoError(t, js.SetValue(map[string]string{"k": "v"}))
+		assert.Equal(t, "v", (*js.Data)["k"])
+
+		val := map[string]string{"k": "w"}
+		assert.NoError(t, js.SetValue(&val))
+		assert.Equal(t, "w", (*js.Data)["k"])
+
+		assert.NoError(t, js.SetValue(nil))
+		assert.Nil(t, js.Data)
+
+		assert.NoError(t, js.SetValue(`{"k":"x"}`))
+		assert.Equal(t, "x", (*js.Data)["k"])
+
+		assert.NoError(t, js.SetValue([]byte(`{"k":"y"}`)))
+		assert.Equal(t, "y", (*js.Data)["k"])
+	})
+
+	t.Run("string_and_value", func(t *testing.T) {
+		n := 7
+		js := MustNullableJSON[int](&n)
+		assert.Equal(t, "7", js.String())
+
+		v, err := js.Value()
+		assert.NoError(t, err)
+		assert.Equal(t, "7", v)
+
+		var empty NullableJSON[int]
+		assert.Equal(t, "null", empty.String())
+		v, err = empty.Value()
+		assert.NoError(t, err)
+		assert.Equal(t, "null", v)
+
+		var nilJS *NullableJSON[int]
+		assert.Equal(t, "null", nilJS.String())
+	})
+
+	t.Run("scan", func(t *testing.T) {
+		var js NullableJSON[int]
+		assert.NoError(t, js.Scan("12"))
+		assert.Equal(t, 12, *js.Data)
+
+		assert.NoError(t, js.Scan([]byte("13")))
+		assert.Equal(t, 13, *js.Data)
+
+		assert.NoError(t, js.Scan(nil))
+		assert.Nil(t, js.Data)
+
+		assert.Equal(t, ErrInvalidScan, js.Scan(1))
+	})
+
+	t.Run("decode_value", func(t *testing.T) {
+		var js NullableJSON[int]
+		assert.NoError(t, js.DecodeValue("14"))
+		assert.Equal(t, 14, *js.Data)
+
+		assert.NoError(t, js.DecodeValue([]byte("15")))
+		assert.Equal(t, 15, *js.Data)
+
+		assert.NoError(t, js.DecodeValue(16))
+		assert.Equal(t, 16, *js.Data)
+	})
+
+	t.Run("json_roundtrip", func(t *testing.T) {
+		n := 9
+		js := MustNullableJSON[int](&n)
+		data, err := js.MarshalJSON()
+		assert.NoError(t, err)
+		assert.Equal(t, "9", string(data))
+
+		var got NullableJSON[int]
+		assert.NoError(t, got.UnmarshalJSON(data))
+		assert.Equal(t, 9, *got.Data)
+
+		var empty NullableJSON[int]
+		data, err = empty.MarshalJSON()
+		assert.NoError(t, err)
+		assert.Equal(t, "null", string(data))
+	})
 }

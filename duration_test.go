@@ -49,6 +49,11 @@ func TestDuration(t *testing.T) {
 		assert.Error(t, d.Scan([]byte("invalid")))
 		assert.Error(t, d.Scan("w-error"))
 		assert.Error(t, d.Scan(any(nil)))
+		assert.Equal(t, ErrInvalidScanValue, d.Scan(1.5))
+	})
+
+	t.Run("duration_value", func(t *testing.T) {
+		assert.Equal(t, time.Hour, Hour.Duration())
 	})
 
 	t.Run("string", func(t *testing.T) {

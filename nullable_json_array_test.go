@@ -63,4 +63,36 @@ func TestNullableJSONArray(t *testing.T) {
 			assert.ElementsMatch(t, []int{1, 2, 3}, js)
 		}
 	})
+
+	t.Run("scan_nil", func(t *testing.T) {
+		js := NullableJSONArray[int]{1}
+		assert.NoError(t, js.Scan(nil))
+		assert.Nil(t, js)
+	})
+
+	t.Run("set_value_nil", func(t *testing.T) {
+		js := NullableJSONArray[int]{1}
+		assert.NoError(t, js.SetValue(nil))
+		assert.Nil(t, js)
+	})
+
+	t.Run("unmarshal_empty", func(t *testing.T) {
+		js := NullableJSONArray[int]{1}
+		assert.NoError(t, js.UnmarshalJSON(nil))
+		assert.Nil(t, js)
+	})
+
+	t.Run("decode_value", func(t *testing.T) {
+		var js NullableJSONArray[int]
+		assert.NoError(t, js.DecodeValue([]int{1, 2}))
+		assert.Equal(t, NullableJSONArray[int]{1, 2}, js)
+
+		var nilPtr *NullableJSONArray[int]
+		assert.NoError(t, nilPtr.DecodeValue([]int{1}))
+	})
+
+	t.Run("string_nil", func(t *testing.T) {
+		var js NullableJSONArray[int]
+		assert.Equal(t, "null", js.String())
+	})
 }
