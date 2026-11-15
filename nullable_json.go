@@ -81,18 +81,20 @@ func (f *NullableJSON[T]) SetValue(value any) error {
 }
 
 // Value implements the driver.Valuer interface.
-// Nil data and a JSON null payload are SQL NULL, same as the other nullable
-// types. MarshalJSON still emits the JSON literal null.
+// Nil data and a JSON null payload are SQL NULL. The driver value is a nil
+// byte slice, not an untyped nil: GORM infers the column type from Value()
+// of the zero struct, and an untyped nil makes it walk into Data.
+// pgx stores a nil []byte as SQL NULL. MarshalJSON still emits JSON null.
 func (f NullableJSON[T]) Value() (driver.Value, error) {
 	if f.Data == nil {
-		return nil, nil
+		return []byte(nil), nil
 	}
 	v, err := json.Marshal(f.Data)
 	if err != nil {
 		return nil, err
 	}
 	if bytes.Equal(bytes.TrimSpace(v), []byte("null")) {
-		return nil, nil
+		return []byte(nil), nil
 	}
 	return string(v), nil
 }

@@ -80,13 +80,13 @@ func TestNullableJSON(t *testing.T) {
 		assert.Equal(t, "null", empty.String())
 		v, err = empty.Value()
 		assert.NoError(t, err)
-		assert.Nil(t, v)
+		assert.Equal(t, []byte(nil), v)
 
 		var nilMap map[string]string
 		jsMap := MustNullableJSON[map[string]string](nilMap)
 		v, err = jsMap.Value()
 		assert.NoError(t, err)
-		assert.Nil(t, v)
+		assert.Equal(t, []byte(nil), v)
 
 		var nilJS *NullableJSON[int]
 		assert.Equal(t, "null", nilJS.String())
