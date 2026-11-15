@@ -80,12 +80,21 @@ func (f *NullableJSON[T]) SetValue(value any) error {
 	return nil
 }
 
-// Value implements the driver.Valuer interface, json field interface
-func (f NullableJSON[T]) Value() (_ driver.Value, err error) {
-	if v, err := f.MarshalJSON(); err == nil && v != nil {
-		return string(v), nil
+// Value implements the driver.Valuer interface.
+// Nil data and a JSON null payload are SQL NULL, same as the other nullable
+// types. MarshalJSON still emits the JSON literal null.
+func (f NullableJSON[T]) Value() (driver.Value, error) {
+	if f.Data == nil {
+		return nil, nil
 	}
-	return nil, err
+	v, err := json.Marshal(f.Data)
+	if err != nil {
+		return nil, err
+	}
+	if bytes.Equal(bytes.TrimSpace(v), []byte("null")) {
+		return nil, nil
+	}
+	return string(v), nil
 }
 
 // Scan implements the driver.Valuer interface, json field interface
