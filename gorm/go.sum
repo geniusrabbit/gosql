@@ -2,6 +2,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/geniusrabbit/gosql/v2 v2.3.1 h1:pXipcITnQlOtpNmGL9gvbrAcNw/PXmcq2Z4hTQv8aEE=
 github.com/geniusrabbit/gosql/v2 v2.3.1/go.mod h1:0AfJ5CwRl/Nsuc4b/z1IcPxOhaooKvAiWFFxyvz6K4g=
+github.com/geniusrabbit/gosql/v2 v2.3.3 h1:NyDz1aeqIFl7dKkzRRfuH+XVRNIAgAizPWqDYSUAxgU=
+github.com/geniusrabbit/gosql/v2 v2.3.3/go.mod h1:0AfJ5CwRl/Nsuc4b/z1IcPxOhaooKvAiWFFxyvz6K4g=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
 github.com/jinzhu/inflection v1.0.0/go.mod h1:h+uFLlag+Qp1Va5pdKtLDYj+kHp5pxUVkryuEj+Srlc=
 github.com/jinzhu/now v1.1.5 h1:/o9tlHleP7gOFmsnYNz3RGnqzefHA47wQpKrrdTIwXQ=

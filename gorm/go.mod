@@ -3,7 +3,7 @@ module github.com/geniusrabbit/gosql/gorm
 go 1.20
 
 require (
-	github.com/geniusrabbit/gosql/v2 v2.3.1
+	github.com/geniusrabbit/gosql/v2 v2.3.3
 	github.com/stretchr/testify v1.9.0
 	gorm.io/gorm v1.31.0
 )
